@@ -19,8 +19,27 @@
   }
 }
 
+@theme {
+  --animate-marquee: marquee 35s linear infinite;
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Show the site at 90% scale on desktop, like browser zoom at 90% */
+@media (min-width: 1024px) {
+  html {
+    zoom: 0.9;
+  }
+
+  /* Keep full-height sections (like the hero) filling the screen */
+  .min-h-screen {
+    min-height: calc(100vh / 0.9);
+  }
 }
