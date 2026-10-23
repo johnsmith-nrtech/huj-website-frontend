@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExternalLink, RotateCcw, Upload } from "lucide-react";
 import { PAGE_IMAGE_GROUPS } from "@/lib/pageImages";
+import { refreshImagePages } from "./actions";
 import {
   adminGetPageImages,
   adminResetPageImage,
@@ -85,7 +86,8 @@ export default function AdminImagesPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
-      setMessage(slot, "Image updated. The website shows it within a minute.");
+      await refreshImagePages();
+      setMessage(slot, "Image updated.");
       loadImages();
     } else {
       setMessage(slot, res.error ?? "Upload failed.", true);
@@ -101,6 +103,7 @@ export default function AdminImagesPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
+      await refreshImagePages(); // show the default image on the website right away
       setMessage(slot, "Back to the default image.");
       loadImages();
     } else {

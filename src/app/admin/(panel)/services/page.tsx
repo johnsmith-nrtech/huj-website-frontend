@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
 import IconPicker from "@/components/IconPicker";
+import { refreshImagePages } from "../images/actions";
 import ServiceIcon from "@/components/ServiceIcon";
 import { DEFAULT_SERVICE_ICON } from "@/lib/serviceIcons";
 import {
@@ -113,6 +114,7 @@ export default function AdminServicesPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
+      await refreshImagePages();
       setNotice(editingId ? "Service updated." : "Service added.");
       resetForm();
       loadServices();
@@ -130,6 +132,7 @@ export default function AdminServicesPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
+      await refreshImagePages();
       if (editingId === s.id) resetForm();
       setNotice("Service deleted.");
       loadServices();
@@ -149,8 +152,10 @@ export default function AdminServicesPage() {
     });
     if (handleUnauthorized(res.status)) return;
 
-    if (res.ok) loadServices();
-    else setNotice(res.error ?? "Could not update the service.");
+    if (res.ok) {
+      await refreshImagePages();
+      loadServices();
+    } else setNotice(res.error ?? "Could not update the service.");
   };
 
   // Which website page each visible service lands on (9 per page)

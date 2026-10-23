@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Pencil, Plus, Trash2 } from "lucide-react";
+import { refreshImagePages } from "../images/actions"; 
 import {
   adminCreateFaq,
   adminDeleteFaq,
@@ -101,6 +102,7 @@ export default function AdminFaqPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
+      await refreshImagePages();
       setNotice(editingId ? "FAQ updated." : "FAQ added.");
       resetForm();
       loadFaqs();
@@ -118,6 +120,7 @@ export default function AdminFaqPage() {
     if (handleUnauthorized(res.status)) return;
 
     if (res.ok) {
+      await refreshImagePages();
       if (editingId === faq.id) resetForm();
       setNotice("FAQ deleted.");
       loadFaqs();
@@ -136,8 +139,10 @@ export default function AdminFaqPage() {
     });
     if (handleUnauthorized(res.status)) return;
 
-    if (res.ok) loadFaqs();
-    else setNotice(res.error ?? "Could not update the FAQ.");
+    if (res.ok) {
+      await refreshImagePages();
+      loadFaqs();
+    } else setNotice(res.error ?? "Could not update the FAQ.");
   };
 
   return (
