@@ -47,6 +47,10 @@ export const metadata: Metadata = {
     images: ["/images/hero-bg.jpg"],
   },
   formatDetection: { email: false, address: false, telephone: false },
+  icons: {
+    icon: "/images/hujj-icon.png",   // browser tab icon
+    apple: "/images/hujj-icon.png",  // iPhone home-screen icon
+  },
 };
 
 export const viewport: Viewport = {
