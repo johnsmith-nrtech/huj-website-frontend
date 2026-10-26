@@ -22,7 +22,7 @@ export const PAGE_IMAGE_GROUPS = [
       {
         slot: "about_main",
         label: "Large image (below \"Get to know us\")",
-        defaultSrc: "/images/about-us.jpeg",
+        defaultSrc: "/images/about-img.webp",
         alt: "HUJ Technologies: innovation meets compliance",
       },
     ],
