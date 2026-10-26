@@ -32,9 +32,9 @@ const barClass = "mt-4 block h-[3px] w-14 rounded-full bg-[#1fb6e8]";
 
 // TODO: replace "#" with your real profile URLs (and add the same URLs to `sameAs` in layout.tsx)
 const SOCIAL_LINKS = {
-  linkedin: "#",
-  instagram: "#",
-  x: "#",
+  linkedin: "https://www.linkedin.com/company/huj-tech-consultancy",
+  instagram: "https://www.instagram.com/hujconsulting/",
+  x: "", // no X profile yet: paste the URL here and the button appears
 };
 
 function SocialButton({
