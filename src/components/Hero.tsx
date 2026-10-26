@@ -164,23 +164,23 @@ export default function Hero() {
       {/* Trusted expertise strip */}
       <div
         aria-label="Trusted expertise and global impact"
-        className="flex flex-nowrap items-center border-b border-[#e6ecef] px-4 py-4 text-[#0a2f45] lg:px-8"
+        className="flex flex-col gap-4 border-b border-[#e6ecef] px-5 py-5 text-[#0a2f45] lg:flex-row lg:flex-nowrap lg:items-center lg:gap-0 lg:px-8 lg:py-4"
       >
-        <div className="flex shrink-0 flex-col gap-0.5 border-r border-[#e6ecef] pr-4 text-[10px] font-semibold uppercase tracking-[0.15em]">
+        <div className="flex shrink-0 flex-col gap-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] lg:border-r lg:border-[#e6ecef] lg:pr-4">
           <span>Trusted Expertise</span>
           <span>Global Impact</span>
         </div>
 
-        <p className="max-w-[220px] px-4 text-[11px] leading-snug text-[#3f5a6b]">
+        <p className="text-[11px] leading-snug text-[#3f5a6b] lg:max-w-[220px] lg:px-4">
           From strategy to submission, we help you navigate regulatory complexity
           with clarity, speed, and confidence.
         </p>
 
-        <ul className="flex min-w-0 flex-1 flex-nowrap items-center">
+        <ul className="grid grid-cols-2 gap-3 lg:flex lg:min-w-0 lg:flex-1 lg:flex-nowrap lg:items-center lg:gap-0">
           {pillars.map(({ icon: Icon, label }) => (
             <li
               key={label}
-              className="flex min-w-0 flex-1 items-center gap-2 border-l border-[#e6ecef] px-3 text-[11px] font-semibold leading-tight text-[#14527a]"
+              className="flex min-w-0 items-center gap-2 text-[11px] font-semibold leading-tight text-[#14527a] lg:flex-1 lg:border-l lg:border-[#e6ecef] lg:px-3"
             >
               <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#e6f3f8] text-[#1b7fa6]">
                 <Icon size={14} aria-hidden="true" />
@@ -190,7 +190,7 @@ export default function Hero() {
           ))}
         </ul>
 
-        <ArrowRight size={18} aria-hidden="true" className="ml-3 shrink-0 text-[#0a2f45]" />
+        <ArrowRight size={18} aria-hidden="true" className="ml-3 hidden shrink-0 text-[#0a2f45] lg:block" />
       </div>
 
       {/* Regulator marquee: first list is real content, the copy is hidden decoration */}

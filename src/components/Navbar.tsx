@@ -97,7 +97,7 @@ export default function Navbar() {
               aria-current={pathname === l.href ? "page" : undefined}
               onClick={() => setOpen(false)}
               className={`border-b-2 px-5 py-4 text-md font-medium text-white transition hover:opacity-80 md:px-0 md:py-0 md:pb-1 md:text-[15px] ${
-                pathname === l.href ? "md:border-white" : "border-transparent"
+                pathname === l.href ? "border-transparent md:border-white" : "border-transparent"
               }`}
             >
               {l.label}
