@@ -77,8 +77,10 @@ const siteJsonLd = {
         addressRegion: "PA",
         addressCountry: "US",
       },
-      // TODO: add your real profiles, e.g. ["https://www.linkedin.com/company/..."]
-      // sameAs: [],
+      sameAs: [
+        "https://www.linkedin.com/company/huj-tech-consultancy",
+        "https://www.instagram.com/hujconsulting/",
+      ],
     },
     {
       "@type": "WebSite",
