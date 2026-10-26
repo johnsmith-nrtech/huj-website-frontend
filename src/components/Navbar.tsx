@@ -96,11 +96,16 @@ export default function Navbar() {
               title={l.title}
               aria-current={pathname === l.href ? "page" : undefined}
               onClick={() => setOpen(false)}
-              className={`border-b-2 px-5 py-4 text-md font-medium text-white transition hover:opacity-80 md:px-0 md:py-0 md:pb-1 md:text-[15px] ${
-                pathname === l.href ? "border-transparent md:border-white" : "border-transparent"
-              }`}
+              className="px-5 py-4 text-md font-medium text-white transition hover:opacity-80 md:px-0 md:py-0 md:text-[15px]"
             >
-              {l.label}
+              {/* Underline sits under the word only (mobile and desktop) */}
+              <span
+                className={`inline-block border-b-2 pb-1 ${
+                  pathname === l.href ? "border-white" : "border-transparent"
+                }`}
+              >
+                {l.label}
+              </span>
             </Link>
           ))}
         </nav>
