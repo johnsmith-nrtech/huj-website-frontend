@@ -26,7 +26,13 @@ const solidPages: Record<string, string> = {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+
+  // Mark the active link only in the browser, so a hard refresh never keeps a stale server version
+  useEffect(() => setMounted(true), []);
+  const isActive = (href: string) =>
+    mounted && (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   const fixedColor = Object.entries(solidPages).find(([path]) =>
     pathname.startsWith(path)
@@ -94,14 +100,14 @@ export default function Navbar() {
               key={l.href}
               href={l.href}
               title={l.title}
-              aria-current={pathname === l.href ? "page" : undefined}
+              aria-current={isActive(l.href) ? "page" : undefined}
               onClick={() => setOpen(false)}
               className="px-5 py-4 text-md font-medium text-white transition hover:opacity-80 md:px-0 md:py-0 md:text-[15px]"
             >
               {/* Underline sits under the word only (mobile and desktop) */}
               <span
                 className={`inline-block border-b-2 pb-1 ${
-                  pathname === l.href ? "border-white" : "border-transparent"
+                  isActive(l.href) ? "border-white" : "border-transparent"
                 }`}
               >
                 {l.label}
