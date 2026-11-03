@@ -10,6 +10,7 @@ const links = [
   { href: "/about", label: "About", title: "About HUJ Technologies – Our Mission, Vision & Approach" },
   { href: "/services", label: "Services", title: "Regulatory, QMS & Compliance Services" },
   { href: "/contact", label: "Contact", title: "Contact HUJ Consulting" },
+  { href: "/regulatory-app", label: "Regulatory App", title: "AI-Powered Regulatory App – HUJ Consulting" },
 ];
 
 // Pages where the navbar always has a solid background (no transparency)
@@ -21,6 +22,7 @@ const solidPages: Record<string, string> = {
   "/terms-of-use": "#09183C",
   "/cookie-policy": "#09183C",
   "/disclaimer": "#09183C",
+  "/regulatory-app": "#09183C",
 };
 
 export default function Navbar() {
@@ -79,7 +81,7 @@ export default function Navbar() {
           aria-expanded={open}
           aria-controls="main-menu"
           onClick={() => setOpen((o) => !o)}
-          className="flex flex-col gap-[5px] p-2 md:hidden"
+          className="flex flex-col gap-[5px] p-2 lg:hidden"
         >
           <span className="h-0.5 w-6 bg-white" />
           <span className="h-0.5 w-6 bg-white" />
@@ -91,7 +93,7 @@ export default function Navbar() {
           id="main-menu"
           aria-label="Main navigation"
           style={{ backgroundColor: open ? bgColor : undefined }}
-          className={`absolute left-0 right-0 top-full flex-col md:left-1/2 md:right-auto md:top-1/2 md:flex md:-translate-x-1/2 md:-translate-y-1/2 md:flex-row md:gap-14 md:bg-transparent ${
+          className={`absolute left-0 right-0 top-full flex-col lg:left-1/2 lg:right-auto lg:top-1/2 lg:flex lg:-translate-x-1/2 lg:-translate-y-1/2 lg:flex-row lg:gap-10 lg:bg-transparent xl:gap-14 ${
             open ? "flex" : "hidden"
           }`}
         >
@@ -102,7 +104,7 @@ export default function Navbar() {
               title={l.title}
               aria-current={isActive(l.href) ? "page" : undefined}
               onClick={() => setOpen(false)}
-              className="px-5 py-4 text-md font-medium text-white transition hover:opacity-80 md:px-0 md:py-0 md:text-[15px]"
+              className="whitespace-nowrap px-5 py-4 text-md font-medium text-white transition hover:opacity-80 lg:px-0 lg:py-0 lg:text-[15px]"
             >
               {/* Underline sits under the word only (mobile and desktop) */}
               <span
