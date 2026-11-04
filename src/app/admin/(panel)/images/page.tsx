@@ -161,10 +161,15 @@ export default function AdminImagesPage() {
                   className="flex flex-col overflow-hidden rounded-2xl border border-[#e6e9ee] bg-white shadow-[0_6px_20px_rgba(15,31,71,0.04)]"
                 >
                   <div className="relative h-[180px] bg-gradient-to-br from-[#dfe4ee] to-[#c9d1e0]">
-                    {!loading && (
+                    {!loading && src && (
                       // Plain <img> so uploaded images from the backend need no next.config setup
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={src} alt={img.alt} className="h-full w-full object-cover" />
+                    )}
+                    {!loading && !src && (
+                      <span className="absolute inset-0 grid place-items-center text-sm text-[#5b6472]">
+                        No image yet
+                      </span>
                     )}
                     <span
                       className={`absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-xs font-medium ${

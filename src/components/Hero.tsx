@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import HeroSlideshow, { type HeroSlide } from "@/components/HeroSlideshow";
 import { getPageImages, resolveImageUrl } from "@/lib/pageImagesApi";
 import { getPageImage } from "@/lib/pageImages";
 import {
@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 
 const stats = [
-  { icon: Globe, value: "20+", label: "Regulatory Authorities Mapped" },
-  { icon: Layers, value: "8", label: "Core Service Offerings" },
-  { icon: ShieldCheck, value: "24/7", label: "AI-Powered Monitoring" },
+  { icon: Globe, value: "20+", label: "Regulatory Authorities Mapped", href: "/regulatory-app" },
+  { icon: Layers, value: "9", label: "Core Service Offerings" },
+  // { icon: ShieldCheck, value: "24/7", label: "AI-Powered Monitoring" },
 ];
 
 const pillars = [
@@ -62,21 +62,21 @@ const delay = (ms: number) => ({ animationDelay: `${ms}ms` });
 
 // Hero background: the image uploaded in /admin/images, or the default
 async function HeroImage() {
-  const { defaultSrc, alt } = getPageImage("home_hero");
-  const uploaded = (await getPageImages())["home_hero"];
+  const images = await getPageImages();
 
-  return (
-    <Image
-      src={uploaded ? resolveImageUrl(uploaded) : defaultSrc}
-      alt={alt}
-      fill
-      priority
-      quality={85}
-      sizes="100vw"
-      unoptimized={Boolean(uploaded)} // uploaded images come from the backend, served as-is
-      className="object-cover object-center"
-    />
-  );
+  const slides: HeroSlide[] = (["home_hero", "home_hero_2"] as const)
+    .map((slot) => {
+      const { defaultSrc, alt } = getPageImage(slot);
+      const uploaded = images[slot];
+      return {
+        src: uploaded ? resolveImageUrl(uploaded) : defaultSrc,
+        alt,
+        unoptimized: Boolean(uploaded), // uploaded images come from the backend, served as-is
+      };
+    })
+    .filter((slide) => slide.src); // the second image is skipped until it is uploaded
+
+  return <HeroSlideshow slides={slides} />;
 }
 
 export default function Hero() {
@@ -141,22 +141,40 @@ export default function Hero() {
           </div>
 
           <ul aria-label="HUJ Consulting at a glance" className="hero-reveal mt-10 flex flex-wrap gap-y-5" style={delay(600)}>
-            {stats.map(({ icon: Icon, value, label }) => (
-              <li
-                key={label}
-                className="flex items-center gap-3 pr-6 md:border-l md:border-white/20 md:px-6 md:first:border-l-0 md:first:pl-0"
-              >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#2fb8a6] text-[#4fe3d0]">
-                  <Icon size={18} aria-hidden="true" />
-                </span>
-                <div>
-                  <strong className="block text-xl leading-tight">{value}</strong>
-                  <small className="block max-w-[100px] text-[10px] text-white/75">
-                    {label}
-                  </small>
-                </div>
-              </li>
-            ))}
+            {stats.map(({ icon: Icon, value, label, href }) => {
+              const content = (
+                <>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#2fb8a6] text-[#4fe3d0] transition group-hover:bg-[#4fe3d0]/15">
+                    <Icon size={18} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <strong className="block text-xl leading-tight">{value}</strong>
+                    <small className="block max-w-[100px] text-[10px] text-white/75 transition group-hover:text-white">
+                      {label}
+                    </small>
+                  </div>
+                </>
+              );
+
+              return (
+                <li
+                  key={label}
+                  className="flex items-center gap-3 pr-6 md:border-l md:border-white/20 md:px-6 md:first:border-l-0 md:first:pl-0"
+                >
+                  {href ? (
+                    <Link
+                      href={href}
+                      title={`${label} – see our Regulatory App`}
+                      className="group flex items-center gap-3 rounded-lg"
+                    >
+                      {content}
+                    </Link>
+                  ) : (
+                    content
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

@@ -9,6 +9,7 @@ const links = [
   { href: "/", label: "Home", title: "HUJ Consulting – Regulatory & Compliance Home" },
   { href: "/about", label: "About", title: "About HUJ Technologies – Our Mission, Vision & Approach" },
   { href: "/services", label: "Services", title: "Regulatory, QMS & Compliance Services" },
+  { href: "/products", label: "Our Products", title: "HUJ Consulting Products – Regulatory Software & Tools" },
   { href: "/contact", label: "Contact", title: "Contact HUJ Consulting" },
   { href: "/regulatory-app", label: "Regulatory App", title: "AI-Powered Regulatory App – HUJ Consulting" },
 ];

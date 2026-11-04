@@ -13,6 +13,12 @@ export const PAGE_IMAGE_GROUPS = [
         defaultSrc: "/images/hero-img.jpeg",
         alt: "Scientist reviewing a global regulatory intelligence map covering FDA, TGA, EU MDR, PMDA, NMPA and Health Canada",
       },
+      {
+        slot: "home_hero_2",
+        label: "Hero section – second image (optional)",
+        defaultSrc: "",
+        alt: "HUJ Consulting – regulatory and compliance support for life sciences",
+      },
     ],
   },
   {

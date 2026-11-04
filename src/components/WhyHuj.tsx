@@ -13,12 +13,16 @@ const reasons = [
     title: "Partnership",
     text: "We work alongside your team, not just around it.",
   },
+  {
+    title: "Regulatory Strategy & US Market Access",
+    text: "Clear FDA pathway planning, from 510(k) and De Novo to PMA, for a faster route to the US market.",
+  },
 ];
 
 export default function WhyHuj() {
   return (
     <section aria-labelledby="why-huj-heading" className="bg-white px-5 py-16 md:px-16 md:py-24">
-      <div className="mx-auto max-w-[1100px]">
+      <div className="mx-auto max-w-[1240px]">
         {/* Heading (appears first) */}
         <Reveal>
           <h2
@@ -30,7 +34,7 @@ export default function WhyHuj() {
         </Reveal>
 
         {/* Cards: left, then center, then right */}
-        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+        <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {reasons.map((r, i) => (
             <li key={r.title}>
               <Reveal delay={150 + i * 150} className="h-full">
