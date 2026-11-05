@@ -65,7 +65,7 @@ function SocialButton({
 
 export default function Footer() {
   const pathname = usePathname();
-     if (pathname.startsWith("/admin")) return null;
+  if (pathname.startsWith("/admin")) return null;
 
   // Clicking a link to the page you're already on scrolls smoothly to the top
   const scrollTopIfSamePage = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
