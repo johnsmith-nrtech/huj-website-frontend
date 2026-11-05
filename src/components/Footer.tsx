@@ -14,12 +14,13 @@ const quickLinks = [
   { label: "Regulatory App", href: "/regulatory-app" },
 ];
 
-const services: string[][] = [
-  ["Healthcare", "Consulting"],
-  ["Quality &", "Compliance"],
-  ["Risk Mitigation"],
-  ["IT Solutions"],
-  ["Technology Advisory"],
+const services = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Our Products", href: "/products" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Regulatory App", href: "/regulatory-app" },
 ];
 
 const legal = [
@@ -63,9 +64,16 @@ function SocialButton({
 }
 
 export default function Footer() {
-  
   const pathname = usePathname();
-  if (pathname.startsWith("/admin")) return null;
+     if (pathname.startsWith("/admin")) return null;
+
+  // Clicking a link to the page you're already on scrolls smoothly to the top
+  const scrollTopIfSamePage = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (pathname === href) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <footer aria-label="Site footer" className="relative overflow-hidden bg-[#031330] bg-[radial-gradient(circle_at_20%_100%,rgba(14,60,110,0.35),transparent_55%)] text-white">
@@ -121,7 +129,7 @@ export default function Footer() {
           <ul className="mt-8 space-y-5">
             {quickLinks.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} title={`${l.label} – HUJ Consulting`} className="flex items-center gap-3 text-base text-white/90 transition hover:text-[#1fb6e8]">
+                <Link href={l.href} onClick={scrollTopIfSamePage(l.href)} title={`${l.label} – HUJ Consulting`} className="flex items-center gap-3 text-base text-white/90 transition hover:text-[#1fb6e8]">
                   <ChevronRight size={20} aria-hidden="true" className="shrink-0 text-[#1fb6e8]" />
                   {l.label}
                 </Link>
@@ -135,18 +143,11 @@ export default function Footer() {
           <h2 id="footer-services" className={headingClass}>Our Services</h2>
           <span aria-hidden="true" className={barClass} />
           <ul className="mt-8 space-y-5">
-            {services.map((lines) => (
-              <li key={lines.join(" ")}>
-                <Link href="/services" title={`${lines.join(" ")} – HUJ Consulting services`} className="flex items-start gap-3 text-base leading-7 text-white/90 transition hover:text-[#1fb6e8]">
-                  <ChevronRight size={20} aria-hidden="true" className="mt-1 shrink-0 text-[#1fb6e8]" />
-                  <span>
-                    {lines.map((line, i) => (
-                      <span key={line}>
-                        {line}
-                        {i < lines.length - 1 && <br />}
-                      </span>
-                    ))}
-                  </span>
+            {services.map((l) => (
+              <li key={l.label}>
+                <Link href={l.href} onClick={scrollTopIfSamePage(l.href)} title={`${l.label} – HUJ Consulting`} className="flex items-center gap-3 text-base text-white/90 transition hover:text-[#1fb6e8]">
+                  <ChevronRight size={20} aria-hidden="true" className="shrink-0 text-[#1fb6e8]" />
+                  {l.label}
                 </Link>
               </li>
             ))}
