@@ -9,7 +9,6 @@ const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
-  { label: "Our Products", href: "/products" },
   { label: "Contact Us", href: "/contact" },
   { label: "Regulatory App", href: "/regulatory-app" },
 ];
