@@ -15,12 +15,11 @@ const quickLinks = [
 ];
 
 const services = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Our Products", href: "/products" },
-  { label: "Contact Us", href: "/contact" },
-  { label: "Regulatory App", href: "/regulatory-app" },
+  { label: "Healthcare Consulting", href: "/services" },
+  { label: "Quality & Compliance", href: "/services" },
+  { label: "Risk Mitigation", href: "/services" },
+  { label: "IT Solutions", href: "/services" },
+  { label: "Technology Advisory", href: "/services" },
 ];
 
 const legal = [

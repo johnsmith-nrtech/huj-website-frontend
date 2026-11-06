@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Space_Grotesk, IBM_Plex_Sans } from "next/font/google";
 import {
+  ArrowDown,
+  ArrowLeftRight,
   ArrowRight,
-  BellRing,
-  CheckCircle2,
-  FileSearch,
+  Award,
+  Bell,
+  FileText,
   Globe,
-  Radar,
+  History,
+  Link2,
+  MessageCircleQuestion,
+  Scale,
+  Search,
   ShieldCheck,
-  TrendingUp,
+  Smartphone,
+  type LucideIcon,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
@@ -24,22 +32,25 @@ const bodyFont = IBM_Plex_Sans({
   variable: "--font-body",
 });
 
+// Display font for big headings, Arial bold for section headings (same as Home and About)
 const H = "font-[family-name:var(--font-heading)]";
+const ARIAL = "font-[family-name:Arial,Helvetica,sans-serif]";
 
 /* ---------- SEO ---------- */
 
 const SITE_URL = "https://hujconsulting.com"; // change if your domain differs
 const PATH = "/regulatory-app";
+const APP_NAME = "Medical Device Compliance";
+const DESCRIPTION =
+  "FDA, ISO 13485, EU MDR and more in one app: search requirements, see expert-reviewed mappings across markets and compare them side by side.";
 
 export const metadata: Metadata = {
-  title: "Regulatory App | AI-Powered Regulatory Intelligence | HUJ Consulting",
-  description:
-    "HUJ Consulting's regulatory app tracks FDA, EU MDR, Health Canada and global regulatory updates around the clock, flags compliance gaps early and helps your team stay audit-ready.",
+  title: "Regulatory App | HUJ Consulting",
+  description: DESCRIPTION,
   alternates: { canonical: `${SITE_URL}${PATH}` },
   openGraph: {
     title: "Regulatory App | HUJ Consulting",
-    description:
-      "AI-powered regulatory monitoring, gap analysis and audit readiness for life sciences and medical device teams.",
+    description: DESCRIPTION,
     url: `${SITE_URL}${PATH}`,
     siteName: "HUJ Consulting",
     type: "website",
@@ -47,8 +58,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Regulatory App | HUJ Consulting",
-    description:
-      "AI-powered regulatory monitoring, gap analysis and audit readiness for life sciences and medical device teams.",
+    description: DESCRIPTION,
   },
 };
 
@@ -57,9 +67,22 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebPage",
+      "@id": `${SITE_URL}${PATH}#webpage`,
       name: "Regulatory App | HUJ Consulting",
       url: `${SITE_URL}${PATH}`,
-      about: { "@id": `${SITE_URL}/#organization` },
+      description: DESCRIPTION,
+      about: { "@id": `${SITE_URL}${PATH}#app` },
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+    },
+    {
+      "@type": "MobileApplication",
+      "@id": `${SITE_URL}${PATH}#app`,
+      name: APP_NAME,
+      operatingSystem: "iOS, Android",
+      applicationCategory: "BusinessApplication",
+      description:
+        "A searchable library of FDA, ISO 13485, EU MDR and other medical device regulations, with expert-reviewed mappings and side-by-side comparisons across markets.",
+      publisher: { "@id": `${SITE_URL}/#organization` },
     },
     {
       "@type": "BreadcrumbList",
@@ -71,57 +94,152 @@ const jsonLd = {
   ],
 };
 
-/* ---------- Content (edit freely) ---------- */
+/* ---------- Content (from "Regulatory App – Website Page Content") ---------- */
 
-const authorities = ["FDA", "EU MDR", "IVDR", "Health Canada", "TGA", "PMDA", "NMPA", "MHRA"];
+const SCREENS = {
+  home: {
+    src: "/images/regulatory-app-home.png",
+    alt: "App dashboard with search bar, quick access tiles and popular searches",
+  },
+  mapping: {
+    src: "/images/regulatory-app-mapping.png",
+    alt: "FDA 820.30 Design Controls mapped to ISO 13485, EU MDR, Canada MDSAP and Japan PMDA",
+  },
+  compare: {
+    src: "/images/regulatory-app-compare.png",
+    alt: "Comparison of FDA 820.30 and ISO 13485:2016 clause 7.3 with shared requirements",
+  },
+};
 
-const features = [
-  {
-    icon: Radar,
-    title: "Regulatory monitoring, around the clock",
-    text: "Tracks FDA, EU MDR and global regulatory updates continuously, so your team hears about changes the moment they happen.",
-  },
-  {
-    icon: FileSearch,
-    title: "Intelligent document & gap analysis",
-    text: "Reviews SOPs, protocols and technical files against current requirements in minutes, catching gaps before an auditor does.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Predictive audit readiness",
-    text: "Uses AI-driven risk modeling to show where an inspection is likely to dig deepest, so you walk in prepared.",
-  },
+const heroStats: { icon: LucideIcon; value: string; label: string }[] = [
+  { icon: Globe, value: "6", label: "Regulatory Authorities" },
+  { icon: Award, value: "ISO 13485", label: "Global QMS Reference" },
+  { icon: Smartphone, value: "iOS + Android", label: "Mobile App" },
+];
+
+const frameworks = ["FDA", "ISO 13485", "EU MDR", "MHRA", "HEALTH CANADA", "MDSAP", "PMDA", "TGA"];
+
+const features: { icon: LucideIcon; title: string; text: string }[] = [
   {
     icon: Globe,
-    title: "One view across markets",
-    text: "Maps requirements across regions, with clarity on which documentation can be reused in each market.",
+    title: "Browse by Authority",
+    text: "Move from authority to regulation to section to requirement, organized the way the regulations themselves are.",
+  },
+  {
+    icon: Search,
+    title: "Search Everything",
+    text: "Search by keyword, clause number or topic. Filter by authority and content type, with the source reference on every result.",
+  },
+  {
+    icon: FileText,
+    title: "Plain-Language Requirements",
+    text: "Each requirement opens with a clear summary, who it applies to, related guidance, a link to the official source and the date it was last reviewed.",
+  },
+  {
+    icon: ArrowLeftRight,
+    title: "Cross-Authority Mapping",
+    text: "See the equivalent or related requirements in ISO 13485, EU MDR, MDSAP, PMDA and more, each mapping set by subject-matter experts.",
+  },
+  {
+    icon: Scale,
+    title: "Side-by-Side Comparison",
+    text: "Put two requirements next to each other: summary, similarities, differences and details, ready to save for later.",
+  },
+  {
+    icon: MessageCircleQuestion,
+    title: "Regulatory Assistant",
+    text: "Ask a question in plain English. Answers come only from the reviewed library and always show their sources. If the library can’t support an answer, it says so.",
+  },
+];
+
+const screens = [
+  {
+    ...SCREENS.home,
+    title: "Your dashboard",
+    text: "Search, quick access to authorities, comparisons, favorites and recent views, plus popular topics such as CAPA and Design Controls.",
+  },
+  {
+    ...SCREENS.mapping,
+    title: "Mapping across authorities",
+    text: "One FDA requirement and its related clauses in ISO 13485, EU MDR, MDSAP and PMDA, each with an expert-set match level.",
+  },
+  {
+    ...SCREENS.compare,
+    title: "Side-by-side comparison",
+    text: "FDA design controls next to ISO 13485 clause 7.3: what each one focuses on and where they agree.",
   },
 ];
 
 const steps = [
+  { n: 1, title: "Find", text: "Search or browse to the requirement you need." },
+  { n: 2, title: "Understand", text: "Read the plain-language summary, scope and official source." },
+  { n: 3, title: "Map", text: "See how the same requirement looks in other markets." },
+  { n: 4, title: "Compare & Save", text: "Compare side by side and save it to your favorites." },
+];
+
+const trust: { icon: LucideIcon; title: string; text: string }[] = [
   {
-    n: 1,
-    title: "Define your scope",
-    text: "Tell us your products, risk classes and target markets.",
+    icon: ShieldCheck,
+    title: "Expert-Reviewed",
+    text: "Every requirement, mapping and comparison goes through draft, review and publish before anyone sees it. Retired content leaves the app.",
   },
   {
-    n: 2,
-    title: "Monitor & analyse",
-    text: "The app watches regulatory changes and checks your documents against them.",
+    icon: Link2,
+    title: "Sourced, Always",
+    text: "Each item links to its official source and shows when it was last reviewed. The Assistant lists the sources behind every answer.",
   },
   {
-    n: 3,
-    title: "Act with confidence",
-    text: "Get clear alerts and prioritised actions, backed by our regulatory experts.",
+    icon: History,
+    title: "Fully Audited",
+    text: "Every content change is recorded in an audit trail: who changed what, and when.",
+  },
+  {
+    icon: Bell,
+    title: "Always Current",
+    text: "Favorites always open the latest version, and you are notified when an authority you follow publishes an update.",
   },
 ];
 
-/* Mock alerts shown in the hero preview (illustration only) */
-const previewAlerts = [
-  { tag: "FDA", text: "New guidance published", tone: "bg-[#4fe3d0]/15 text-[#4fe3d0]" },
-  { tag: "EU MDR", text: "Requirement updated", tone: "bg-[#2bb5f5]/15 text-[#2bb5f5]" },
-  { tag: "Gap", text: "SOP needs review", tone: "bg-amber-400/15 text-amber-300" },
+const audiences = [
+  { title: "Regulatory Affairs Teams", text: "Check what each market expects before you enter it." },
+  { title: "Quality & QMS Professionals", text: "See how the QMSR and ISO 13485 line up, clause by clause." },
+  { title: "Consultants & Auditors", text: "A quick, sourced reference for audits, gap assessments and client work." },
+  { title: "MedTech Startups", text: "Understand global requirements early, without a full regulatory department." },
 ];
+
+/* ---------- Phone frame for screenshots ---------- */
+
+function PhoneFrame({
+  src,
+  alt,
+  priority = false,
+  sizes,
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+  sizes: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`rounded-[2.6rem] bg-[#0b1530] p-2.5 shadow-[0_14px_32px_rgba(15,31,71,0.16)] ring-1 ring-white/10 ${className}`}
+    >
+      <div className="overflow-hidden rounded-[2.1rem] bg-white">
+        <Image
+          src={src}
+          alt={alt}
+          width={1200}
+          height={2580}
+          priority={priority}
+          sizes={sizes}
+          className="h-auto w-full"
+        />
+      </div>
+    </div>
+  );
+}
 
 /* ---------- Page ---------- */
 
@@ -132,141 +250,172 @@ export default function RegulatoryAppPage() {
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      {/* Hero */}
+      {/* 1. Hero */}
       <section
         aria-labelledby="regapp-heading"
-        className="relative overflow-hidden bg-[#0f1729] px-5 pb-20 pt-36 text-white md:px-10 md:pb-24 md:pt-40"
+        className="relative overflow-hidden bg-[linear-gradient(160deg,#09183c_0%,#0a1f45_55%,#0c2d4f_100%)] px-5 pb-12 pt-24 text-white md:px-10 md:pb-14 md:pt-28"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(43,181,245,0.25),transparent_65%)]"
+          className="pointer-events-none absolute -right-48 top-10 h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(31,182,232,0.18),transparent_65%)]"
         />
-        <div className="relative mx-auto grid max-w-[1200px] items-center gap-14 lg:grid-cols-[1.1fr_1fr]">
+
+        <div className="relative mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-[1.4fr_0.6fr]">
           <div>
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#35d9c4]">
-                AI-Powered Regulatory Intelligence
+              <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#35d9c4]">
+                Medical Device Compliance App
               </p>
             </Reveal>
             <Reveal delay={150}>
               <h1
                 id="regapp-heading"
-                className={`${H} mt-5 text-4xl font-semibold leading-tight tracking-tight md:text-6xl`}
+                className={`${H} mt-3 text-3xl font-semibold leading-[1.15] tracking-tight md:text-[2.6rem]`}
               >
-                Stay ahead of every{" "}
+                Global device regulations,
+                <br className="hidden sm:block" />{" "}
                 <span className="bg-gradient-to-r from-[#4fe3c8] to-[#4cc3f5] bg-clip-text text-transparent">
-                  regulatory change
-                </span>
+                  mapped
+                </span>{" "}
+                in one{"\u00a0"}app.
               </h1>
             </Reveal>
             <Reveal delay={300}>
-              <p className="mt-6 max-w-xl text-base leading-7 text-white/85 md:text-lg">
-                Our regulatory app monitors global requirements, checks your documentation against them and
-                flags gaps early, so compliance stays a step ahead instead of a scramble before the audit.
+              <p className="mt-4 max-w-[560px] text-sm leading-6 text-white/85 md:text-base md:leading-7">
+                Our {APP_NAME} app brings FDA, ISO 13485, EU MDR and other major frameworks into one searchable
+                library. Open any requirement and see how it lines up with other markets, mapped and reviewed by
+                regulatory experts.
               </p>
             </Reveal>
+
             <Reveal delay={450}>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className="mt-6 flex flex-wrap items-center gap-5">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-3 rounded-full bg-[#4fe3d0] px-6 py-3 text-sm font-bold text-[#06263a] transition hover:bg-[#6cf0de] md:text-base"
+                  className="inline-flex items-center gap-3 rounded-full bg-[#4fe3d0] px-6 py-2.5 text-sm font-bold md:text-base text-[#06263a] transition hover:bg-[#6cf0de]"
                 >
-                  Request a Demo <ArrowRight size={18} aria-hidden="true" />
+                  Request Access <ArrowRight size={18} aria-hidden="true" />
                 </Link>
-                <Link
-                  href="/services"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold transition hover:bg-white/10 md:text-base"
-                >
-                  Explore Services
-                </Link>
+                <a href="#how-it-works" className="group inline-flex items-center gap-3 text-sm font-semibold md:text-base">
+                  <span className="grid h-10 w-10 place-items-center rounded-full border border-[#4fe3d0] transition group-hover:bg-[#4fe3d0]/20">
+                    <ArrowDown size={18} aria-hidden="true" />
+                  </span>
+                  See How It Works
+                </a>
               </div>
+            </Reveal>
+
+            <Reveal delay={600}>
+              <ul aria-label={`${APP_NAME} app at a glance`} className="mt-7 flex flex-wrap gap-y-4">
+                {heroStats.map(({ icon: Icon, value, label }) => (
+                  <li
+                    key={label}
+                    className="flex items-center gap-3 pr-6 md:border-l md:border-white/20 md:px-6 md:first:border-l-0 md:first:pl-0"
+                  >
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#2fb8a6] text-[#4fe3d0]">
+                      <Icon size={16} aria-hidden="true" />
+                    </span>
+                    <div>
+                      <strong className={`${H} block text-lg leading-tight`}>{value}</strong>
+                      <small className="block text-xs text-white/75">{label}</small>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
           </div>
 
-          {/* App preview (illustration) */}
           <Reveal delay={300}>
-            <div
-              aria-hidden="true"
-              className="rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_80px_rgba(0,0,0,0.45)] backdrop-blur"
-            >
-              <div className="flex items-center justify-between">
-                <p className={`${H} text-sm font-semibold text-white/90`}>Regulatory Dashboard</p>
-                <span className="flex items-center gap-1.5 rounded-full bg-[#4fe3d0]/15 px-2.5 py-1 text-[11px] font-semibold text-[#4fe3d0]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#4fe3d0]" /> Live
-                </span>
-              </div>
-
-              <div className="mt-5 grid grid-cols-3 gap-3">
-                {[
-                  { label: "Authorities", value: "20+" },
-                  { label: "Open gaps", value: "3" },
-                  { label: "Audit ready", value: "92%" },
-                ].map((s) => (
-                  <div key={s.label} className="rounded-2xl bg-white/[0.06] p-3">
-                    <p className="text-[11px] text-white/60">{s.label}</p>
-                    <p className={`${H} mt-1 text-xl font-semibold`}>{s.value}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 space-y-2.5">
-                {previewAlerts.map((a) => (
-                  <div key={a.text} className="flex items-center gap-3 rounded-2xl bg-white/[0.06] px-3 py-3">
-                    <BellRing size={16} className="shrink-0 text-white/60" />
-                    <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${a.tone}`}>{a.tag}</span>
-                    <span className="truncate text-sm text-white/85">{a.text}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 rounded-2xl bg-white/[0.06] p-3">
-                <div className="flex items-center justify-between text-[11px] text-white/60">
-                  <span>Audit readiness</span>
-                  <span>92%</span>
-                </div>
-                <div className="mt-2 h-2 rounded-full bg-white/10">
-                  <div className="h-2 w-[92%] rounded-full bg-gradient-to-r from-[#4fe3c8] to-[#4cc3f5]" />
-                </div>
-              </div>
-            </div>
+            <PhoneFrame
+              {...SCREENS.mapping}
+              priority
+              sizes="(min-width: 1024px) 230px, 200px"
+              className="mx-auto w-[200px] md:w-[230px]"
+            />
           </Reveal>
         </div>
       </section>
 
-      {/* Authorities strip */}
-      <section aria-label="Regulatory authorities covered" className="border-b border-[#e6ecef] px-5 py-6">
-        <ul className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-center gap-x-8 gap-y-3">
-          {authorities.map((a) => (
-            <li key={a} className="text-sm font-bold tracking-[0.15em] text-[#6a7f9a]">
-              {a}
+      {/* 2. Frameworks strip */}
+      <section aria-label="Frameworks covered in the app" className="border-b border-[#e6ecef] bg-white px-5 py-4">
+        <ul className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-center gap-y-3">
+          {frameworks.map((f) => (
+            <li
+              key={f}
+              className="whitespace-nowrap border-r border-[#e6ecef] px-4 text-xs font-bold tracking-[0.15em] text-[#6a7f9a] last:border-r-0 md:px-6"
+            >
+              {f}
             </li>
           ))}
         </ul>
       </section>
 
-      {/* Features */}
-      <section aria-labelledby="features-heading" className="px-5 py-16 md:py-24">
-        <div className="mx-auto max-w-[1140px]">
+      {/* 3. What the app does */}
+      <section aria-labelledby="features-heading" className="bg-white px-5 py-12 md:px-16 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
           <Reveal className="text-center">
-            <h2 id="features-heading" className={`${H} text-3xl font-semibold tracking-tight md:text-4xl`}>
-              What the app does
+            <h2 id="features-heading" className={`${ARIAL} text-2xl font-bold tracking-tight md:text-3xl`}>
+              What the App Does
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-[#5b6472] md:text-lg">
-              Smart tools built by regulatory experts, for teams that cannot afford to miss a change.
+            <p className="mx-auto mt-3 max-w-2xl text-sm text-[#5b6472] md:text-base">
+              Everything a regulatory or quality professional needs to find, understand and compare requirements
+              across markets.
             </p>
           </Reveal>
 
-          <ul className="mt-14 grid gap-6 md:grid-cols-2">
+          <ul className="mt-9 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map(({ icon: Icon, title, text }, i) => (
               <li key={title}>
-                <Reveal delay={150 + i * 150} className="h-full">
-                  <article className="h-full rounded-2xl border border-[#e6e9ee] bg-white p-7 shadow-[0_8px_30px_rgba(15,31,71,0.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(15,31,71,0.1)]">
-                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-[#0f1b3d] text-[#4fe3d0]">
-                      <Icon size={22} aria-hidden="true" />
+                <Reveal delay={100 + (i % 3) * 150} className="h-full">
+                  <article className="h-full rounded-2xl border border-[#e6e9ee] bg-white px-6 py-6 shadow-[0_8px_30px_rgba(15,31,71,0.06)] transition hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(15,31,71,0.12)]">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#e6f3f8] text-[#14527a]">
+                      <Icon size={20} aria-hidden="true" />
                     </span>
-                    <h3 className={`${H} mt-5 text-xl font-semibold`}>{title}</h3>
-                    <p className="mt-2 text-base leading-6 text-[#5b6472]">{text}</p>
+                    <h3 className="mt-4 text-base font-semibold text-[#0f1f47]">{title}</h3>
+                    <p className="mt-1.5 text-sm leading-6 text-[#5b6472]">{text}</p>
                   </article>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+
+          <Reveal>
+            <p className="mt-7 text-center text-sm text-[#5b6472]">
+              Also in the app: favorites, recent views, update alerts for the authorities you follow, and evidence
+              checklists.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* 4. See it in action */}
+      <section aria-labelledby="screens-heading" className="bg-[#dde9f7] px-5 py-12 md:px-16 md:py-16">
+        <div className="mx-auto max-w-[1200px]">
+          <Reveal className="text-center">
+            <h2 id="screens-heading" className={`${ARIAL} text-2xl font-bold tracking-tight md:text-3xl`}>
+              See It in Action
+            </h2>
+            <p className="mt-3 text-sm text-[#5b6472] md:text-base">
+              A quick look at the screens professionals use every day.
+            </p>
+          </Reveal>
+
+          <ul className="mt-9 grid gap-10 md:grid-cols-3 md:gap-8">
+            {screens.map((s, i) => (
+              <li key={s.title}>
+                <Reveal delay={150 + i * 150}>
+                  <figure>
+                    <PhoneFrame
+                      src={s.src}
+                      alt={s.alt}
+                      sizes="(min-width: 768px) 190px, 180px"
+                      className="mx-auto w-[180px] md:w-[190px]"
+                    />
+                    <figcaption className="mx-auto mt-4 max-w-[300px] text-center">
+                      <span className="block text-base font-semibold text-[#0f1f47]">{s.title}</span>
+                      <span className="mt-1 block text-sm leading-6 text-[#5b6472]">{s.text}</span>
+                    </figcaption>
+                  </figure>
                 </Reveal>
               </li>
             ))}
@@ -274,25 +423,30 @@ export default function RegulatoryAppPage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section aria-labelledby="how-heading" className="bg-[#f6f7fa] px-5 py-16 md:py-24">
-        <div className="mx-auto max-w-[1100px]">
+      {/* 5. How it works */}
+      <section
+        id="how-it-works"
+        aria-labelledby="how-heading"
+        className="scroll-mt-24 bg-white px-5 py-12 md:px-16 md:py-16"
+      >
+        <div className="mx-auto max-w-[1160px]">
           <Reveal className="text-center">
-            <h2 id="how-heading" className={`${H} text-3xl font-semibold tracking-tight md:text-4xl`}>
-              How it works
+            <h2 id="how-heading" className={`${ARIAL} text-2xl font-bold tracking-tight md:text-3xl`}>
+              How It Works
             </h2>
+            <p className="mt-3 text-sm text-[#5b6472] md:text-base">From question to answer in four steps.</p>
           </Reveal>
 
-          <ol className="mt-14 grid gap-6 md:grid-cols-3">
+          <ol className="mt-9 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((s, i) => (
               <li key={s.title}>
-                <Reveal delay={150 + i * 150} className="h-full">
-                  <div className="h-full rounded-2xl border border-[#e6e9ee] bg-white px-6 py-8 text-center shadow-[0_6px_24px_rgba(15,31,71,0.04)]">
-                    <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-[#0f1b3d] text-lg font-bold text-white">
+                <Reveal delay={100 + i * 120} className="h-full">
+                  <div className="h-full px-5 py-6 text-center">
+                    <span className="mx-auto grid h-10 w-10 place-items-center rounded-full bg-[#12224a] text-base font-bold text-white">
                       {s.n}
                     </span>
-                    <h3 className={`${H} mt-4 text-xl font-semibold`}>{s.title}</h3>
-                    <p className="mt-2 text-[15px] leading-6 text-[#5b6472]">{s.text}</p>
+                    <h3 className="mt-3 text-lg font-bold text-[#12224a]">{s.title}</h3>
+                    <p className="mt-1.5 text-sm leading-6 text-[#4b5563]">{s.text}</p>
                   </div>
                 </Reveal>
               </li>
@@ -301,54 +455,84 @@ export default function RegulatoryAppPage() {
         </div>
       </section>
 
-      {/* Why */}
-      <section aria-labelledby="why-heading" className="px-5 py-16 md:py-24">
-        <div className="mx-auto grid max-w-[1100px] items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <h2 id="why-heading" className={`${H} text-3xl font-semibold tracking-tight md:text-4xl`}>
-              Technology and expertise, together
-            </h2>
-            <p className="mt-5 text-base leading-7 text-[#5b6472] md:text-lg">
-              The app does the watching and the first review. Our regulatory team helps you decide what each
-              change means for your products and what to do next.
+      {/* 6. Content you can rely on */}
+      <section aria-labelledby="trust-heading" className="bg-[#09183c] px-5 py-12 text-white md:px-16 md:py-16">
+        <div className="mx-auto max-w-[1200px]">
+          <Reveal className="text-center">
+            <p className="flex items-center justify-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-[#35d9c4]">
+              <span aria-hidden="true" className="h-px w-8 bg-[#35d9c4]" />
+              Built for Regulated Work
+              <span aria-hidden="true" className="h-px w-8 bg-[#35d9c4]" />
             </p>
+            <h2 id="trust-heading" className={`${H} mt-3 text-2xl font-semibold tracking-tight md:text-3xl`}>
+              Content you can rely on
+            </h2>
           </Reveal>
-          <Reveal delay={150}>
-            <ul className="space-y-4">
-              {[
-                "Fewer surprises when regulations change",
-                "Gaps found early, not during an inspection",
-                "Clear priorities instead of long reports",
-                "Support from experienced regulatory consultants",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-base text-[#1a2236]">
-                  <CheckCircle2 size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-[#14987f]" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+
+          <ul className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {trust.map(({ icon: Icon, title, text }, i) => (
+              <li key={title}>
+                <Reveal delay={100 + i * 120} className="h-full">
+                  <article className="h-full rounded-2xl border border-white/10 bg-[#050d22] px-5 pb-6 pt-5">
+                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#1a3357] text-[#4fe3d0]">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <h3 className={`${H} mt-4 text-lg font-semibold`}>{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/80">{text}</p>
+                  </article>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-5 pb-1">
-        <Reveal className="mx-auto max-w-[1224px]">
-          <div className="rounded-2xl bg-[#0f1729] px-6 py-16 text-center text-white md:py-20">
-            <ShieldCheck size={36} aria-hidden="true" className="mx-auto text-[#4fe3d0]" />
-            <h2 className={`${H} mt-4 text-2xl font-semibold tracking-tight md:text-3xl`}>
-              See the regulatory app in action
+      {/* 7. Who it's for */}
+      <section aria-labelledby="audience-heading" className="bg-white px-5 py-12 md:px-10 md:py-16">
+        <div className="mx-auto max-w-[1040px]">
+          <Reveal className="text-center">
+            <h2 id="audience-heading" className={`${ARIAL} text-2xl font-bold tracking-tight md:text-3xl`}>
+              Who It’s For
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-base text-white/85 md:text-lg">
-              Book a short demo and we will show how it fits your products and markets.
+            <p className="mt-3 text-sm text-[#5b6472] md:text-base">
+              Built for the people who keep medical devices compliant.
             </p>
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#4fe3d0] px-7 py-3 text-base font-bold text-[#06263a] transition hover:bg-[#6cf0de]"
-            >
-              Request a Demo <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
+          </Reveal>
+
+          <ul className="mx-auto mt-9 grid max-w-[1040px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {audiences.map((a, i) => (
+              <li key={a.title}>
+                <Reveal delay={100 + i * 120} className="h-full">
+                  <article className="flex h-full min-h-[170px] flex-col items-center justify-start rounded-xl border border-[#e6e9ee] bg-white px-6 pb-6 pt-5 text-center shadow-[0_6px_24px_rgba(15,31,71,0.05)] transition hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(15,31,71,0.1)]">
+                    <h3 className="text-[15px] font-bold leading-snug text-[#0f1f47]">{a.title}</h3>
+                    <p className="mt-2.5 text-[13px] leading-5 text-[#5b6472]">{a.text}</p>
+                  </article>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 8. Call to action + small print (full width, sits directly on the footer) */}
+      <section aria-labelledby="cta-heading" className={`${ARIAL} bg-[#0a1838] px-5 py-10 text-center md:py-14`}>
+        <Reveal className="mx-auto max-w-[900px]">
+          <h2 id="cta-heading" className="text-xl font-bold tracking-tight text-white md:text-2xl">
+            Put global regulations in your pocket.
+          </h2>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-white/90 md:text-base">
+            Request access to the {APP_NAME} app, or book a walkthrough with our team.
+          </p>
+          <Link
+            href="/contact"
+            className="mt-6 inline-block rounded-md bg-white px-7 py-2.5 text-base font-bold text-black transition hover:bg-[#e8ecf5]"
+          >
+            Request Access
+          </Link>
+          <p className="mx-auto mt-7 max-w-3xl text-xs leading-5 text-white/55">
+            The {APP_NAME} app is a reference tool for professionals. It does not provide legal, regulatory or quality
+            advice. A mapping or match level shows how requirements relate; it is not a claim of legal equivalence.
+          </p>
         </Reveal>
       </section>
     </main>
