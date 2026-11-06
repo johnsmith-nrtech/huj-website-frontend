@@ -409,7 +409,7 @@ export default function RegulatoryAppPage() {
                       src={s.src}
                       alt={s.alt}
                       sizes="(min-width: 768px) 190px, 180px"
-                      className="mx-auto w-[180px] md:w-[190px]"
+                      className="mx-auto w-[180px] transition-transform duration-300 ease-out hover:scale-110 motion-reduce:transition-none motion-reduce:hover:scale-100 md:w-[190px]"
                     />
                     <figcaption className="mx-auto mt-4 max-w-[300px] text-center">
                       <span className="block text-base font-semibold text-[#0f1f47]">{s.title}</span>
