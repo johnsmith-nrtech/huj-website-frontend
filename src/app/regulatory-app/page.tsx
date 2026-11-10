@@ -209,6 +209,39 @@ const audiences = [
 
 /* ---------- Phone frame for screenshots ---------- */
 
+// function PhoneFrame({
+//   src,
+//   alt,
+//   priority = false,
+//   sizes,
+//   className = "",
+// }: {
+//   src: string;
+//   alt: string;
+//   priority?: boolean;
+//   sizes: string;
+//   className?: string;
+// }) {
+//   return (
+//     <div
+//       className={`rounded-[2.6rem] bg-[#0b1530] p-2.5 shadow-[0_14px_32px_rgba(15,31,71,0.16)] ring-1 ring-white/10 ${className}`}
+//     >
+//       <div className="overflow-hidden rounded-[2.1rem] bg-white">
+//         <Image
+//           src={src}
+//           alt={alt}
+//           width={1200}
+//           height={2580}
+//           priority={priority}
+//           sizes={sizes}
+//           className="h-auto w-full"
+//         />
+//       </div>
+//     </div>
+//   );
+// }
+
+
 function PhoneFrame({
   src,
   alt,
@@ -224,18 +257,22 @@ function PhoneFrame({
 }) {
   return (
     <div
-      className={`rounded-[2.6rem] bg-[#0b1530] p-2.5 shadow-[0_14px_32px_rgba(15,31,71,0.16)] ring-1 ring-white/10 ${className}`}
+      className={`rounded-[2rem] bg-[#0b1530] p-2.5 shadow-[0_14px_32px_rgba(15,31,71,0.16)] ring-1 ring-white/10 ${className}`}
     >
-      <div className="overflow-hidden rounded-[2.1rem] bg-white">
-        <Image
-          src={src}
-          alt={alt}
-          width={1200}
-          height={2580}
-          priority={priority}
-          sizes={sizes}
-          className="h-auto w-full"
-        />
+      {/* screen: inner radius = outer radius (2rem) - padding (10px) */}
+      <div className="relative aspect-[1200/2580] overflow-hidden rounded-[calc(2rem-10px)] bg-white">
+        {/* image sits 10px above the bottom edge so the nav labels clear the rounded corners */}
+        <div className="absolute inset-x-0 bottom-[10px] top-0">
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority={priority}
+            sizes={sizes}
+            quality={90}
+            className="object-contain object-top"
+          />
+        </div>
       </div>
     </div>
   );
