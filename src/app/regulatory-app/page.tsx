@@ -32,6 +32,11 @@ const bodyFont = IBM_Plex_Sans({
   variable: "--font-body",
 });
 
+const stores = [
+  { name: "App Store", badge: "/images/app-store-badge.svg" },
+  { name: "Google Play", badge: "/images/google-play-badge.svg" },
+];
+
 // Display font for big headings, Arial bold for section headings (same as Home and About)
 const H = "font-[family-name:var(--font-heading)]";
 const ARIAL = "font-[family-name:Arial,Helvetica,sans-serif]";
@@ -208,38 +213,6 @@ const audiences = [
 ];
 
 /* ---------- Phone frame for screenshots ---------- */
-
-// function PhoneFrame({
-//   src,
-//   alt,
-//   priority = false,
-//   sizes,
-//   className = "",
-// }: {
-//   src: string;
-//   alt: string;
-//   priority?: boolean;
-//   sizes: string;
-//   className?: string;
-// }) {
-//   return (
-//     <div
-//       className={`rounded-[2.6rem] bg-[#0b1530] p-2.5 shadow-[0_14px_32px_rgba(15,31,71,0.16)] ring-1 ring-white/10 ${className}`}
-//     >
-//       <div className="overflow-hidden rounded-[2.1rem] bg-white">
-//         <Image
-//           src={src}
-//           alt={alt}
-//           width={1200}
-//           height={2580}
-//           priority={priority}
-//           sizes={sizes}
-//           className="h-auto w-full"
-//         />
-//       </div>
-//     </div>
-//   );
-// }
 
 
 function PhoneFrame({
@@ -459,6 +432,33 @@ export default function RegulatoryAppPage() {
           </ul>
         </div>
       </section>
+
+
+      {/* 4b. App stores – launching soon */}
+      <section aria-labelledby="stores-heading" className="bg-[#09183c] px-5 py-10 text-center text-white md:py-12">
+        <h2 id="stores-heading" className="sr-only">
+          {APP_NAME} app on the App Store and Google Play
+        </h2>
+        <p className="mb-6 text-lg font-bold uppercase tracking-[0.3em] text-white md:text-xl">Launching soon</p>
+        <Reveal>
+          <ul className="flex flex-wrap items-center justify-center gap-5 md:gap-8">
+            
+            {stores.map((s) => (
+              <li key={s.name}>
+                <Image
+                  src={s.badge}
+                  alt={`${s.name} – launching soon`}
+                  width={200}
+                  height={60}
+                  unoptimized
+                  className="block aspect-[27/8] w-[200px] object-cover md:w-[200px]"
+                />
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
 
       {/* 5. How it works */}
       <section
